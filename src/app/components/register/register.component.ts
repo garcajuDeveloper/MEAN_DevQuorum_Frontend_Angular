@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
 
   public page_title : String;
   public user : User;
+  public status: string;
 
   constructor(
     private _userService : UserService
@@ -26,8 +27,15 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(form){
-    //Seguir desde la carpeta numero 52 video 4
-    console.log(this.user);
+    this._userService.onRegistUser(this.user).subscribe(
+        response => {
+          (response.user && response.user._id) ? this.status = 'success' : this.status = 'error';
+          form.reset();
+        },
+        error => {
+          console.log(error);
+        }
+    )
   }
 
 }
