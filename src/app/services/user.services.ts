@@ -17,14 +17,20 @@ export class UserService{
     }
 
     onRegistUser(user): Observable<any>{
-        //convertir el objeto usuario a jsonString
         let params = JSON.stringify(user);
-    
-        //definir los headers
-    
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
-        //peticion AJAX
-        return this._http.post(this.url + '/register', params, {headers: headers});
-        
-      }
+
+        return this._http.post(this.url + '/register', params, {headers: headers});      
+    }
+    
+    onSignUp(user, gettoken = null ): Observable<any> {
+        if(gettoken != null) {
+            user.gettoken = gettoken;
+        }
+
+        let params = JSON.stringify(user);
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+        return this._http.post(this.url + '/login', params, {headers: headers});
+    }
 }
