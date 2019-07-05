@@ -11,10 +11,13 @@
           <a class="nav-link" [routerLink]="['/home']">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"> See Topics</a>
+          <a class="nav-link" href="#"> Topics</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="userIdentity">
           <a class="nav-link" href="#"> Add Topic</a>
+        </li>
+        <li class="nav-item" *ngIf="userIdentity">
+          <a class="nav-link" href="#"> Partners</a>
         </li>
         <li class="nav-item ml-3">
           <form class="form-inline my-2 my-lg-0">
@@ -24,22 +27,22 @@
         </li>
       </ul>
       <ul class="navbar-nav navbar-right">
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="!userIdentity">
               <a class="nav-link" [routerLink]="['/register']">Sign Up</a>
             </li>
-            <li class="nav-item mr-5">
+            <li class="nav-item mr-5" *ngIf="!userIdentity">
               <a class="nav-link" [routerLink]="['/login']">Login</a>
             </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="userIdentity">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            User
+            {{userIdentity.name + ' ' + userIdentity.surname}}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Dashboard</a>
             <a class="dropdown-item" href="#">My Profile</a>
             <a class="dropdown-item" href="#">Settings</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Logout</a>
+            <a class="dropdown-item pointer" (click)="onLogout()">Logout</a>
           </div>
         </li>
       </ul>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params} from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.services';
 
@@ -14,8 +15,13 @@ export class LoginComponent implements OnInit {
   public status: string;
   public identity;
   public gettoken = true;
+  public userToken;
 
-  constructor(private _userService:UserService) { 
+  constructor(
+    private _userService:UserService,
+    private _router : Router,
+    private _route : ActivatedRoute
+    ) { 
     this.page_title = "Who you are?";
     this.user = new User('','','','','','','ROLE_USER');
 
@@ -29,11 +35,15 @@ export class LoginComponent implements OnInit {
       response => {
         if(response.userFinded && response.userFinded._id) {
           this.identity = response.userFinded;
+          localStorage.setItem('userIdentity', JSON.stringify(this.identity));
 
           this._userService.onSignUp(this.user, this.gettoken).subscribe(
             response => {
               if(response.token) {
-                console.log(response.token);
+                this.userToken = response.token;
+                localStorage.setItem('userToken', this.userToken);
+                this.status = 'success';
+                this._router.navigate(['/home']);
               }else {
                 this.status = 'error';
                 console.log(this.status);

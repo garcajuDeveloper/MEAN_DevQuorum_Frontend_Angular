@@ -3,6 +3,13 @@
   <p>Identify yourself</p>
   <hr/>
 
+  <div class="alert alert-success col-md-5 mt-3" *ngIf="status == 'success'">
+    Is a pleasure to see you here, {{identity.name}}! <a [routerLink]="['/login']">Login you profile here.</a>
+  </div>
+  <div class="alert alert-danger col-md-5 mt-3" *ngIf="status == 'error'">
+    Can't login. Missed or wrong data
+  </div>
+
   <form class="col-md-5 ml-0 pl-0" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
     <div class="form-group">
       <label for="email">Em@il</label>
