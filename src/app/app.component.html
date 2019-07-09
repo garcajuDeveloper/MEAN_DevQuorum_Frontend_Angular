@@ -33,6 +33,11 @@
             <li class="nav-item mr-5" *ngIf="!userIdentity">
               <a class="nav-link" [routerLink]="['/login']">Login</a>
             </li>
+            <li class="nav-item" *ngIf="userIdentity">
+              <div class="avatar_mask">
+                <img src="{{this.url + 'avatar/' + userIdentity.image}}" class="avatar_nav"/>
+              </div>
+            </li>
         <li class="nav-item dropdown" *ngIf="userIdentity">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{userIdentity.name + ' ' + userIdentity.surname}}
@@ -40,7 +45,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Dashboard</a>
             <a class="dropdown-item" href="#">My Profile</a>
-            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" [routerLink]="['/settings']">Settings</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item pointer" (click)="onLogout()">Logout</a>
           </div>

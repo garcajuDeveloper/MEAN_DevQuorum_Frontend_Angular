@@ -44,9 +44,16 @@ export class UserService{
     }
 
     getToken(){
-        let token = localStorage.getItem('userIdentity');
+        let token = localStorage.getItem('userToken');
         (token != null && token != undefined) ? this.userToken = token : this.userToken = null
-
+        
         return this.userToken;
+    }
+
+    updateUser(user): Observable<any>{
+        let params = JSON.stringify(user);
+        let headers = new HttpHeaders().set('Content-Type', 'Application/json').set('Authorization', this.getToken());
+
+        return this._http.put(this.url+'user/update', params, {headers: headers});
     }
 }
